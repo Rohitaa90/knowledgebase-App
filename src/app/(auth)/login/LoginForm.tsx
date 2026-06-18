@@ -29,10 +29,36 @@ export default function LoginForm() {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-      {error && <p className="bg-red-50 border border-red-300 text-red-600 text-sm rounded p-3">{error}</p>}
-      <input name="email" type="email" placeholder="Email" required className="border rounded p-2 w-full" />
-      <input name="password" type="password" placeholder="Password" required className="border rounded p-2 w-full" />
-      <button type="submit" disabled={loading} className="bg-black text-white rounded p-2 disabled:opacity-50">
+      {error && (
+        <div className="bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg px-4 py-3">
+          {error}
+        </div>
+      )}
+      <div className="flex flex-col gap-1.5">
+        <label className="text-sm font-medium text-slate-700">Email</label>
+        <input
+          name="email"
+          type="email"
+          placeholder="you@example.com"
+          required
+          className="border border-slate-300 rounded-lg px-3 py-2 text-sm w-full placeholder:text-slate-400"
+        />
+      </div>
+      <div className="flex flex-col gap-1.5">
+        <label className="text-sm font-medium text-slate-700">Password</label>
+        <input
+          name="password"
+          type="password"
+          placeholder="••••••••"
+          required
+          className="border border-slate-300 rounded-lg px-3 py-2 text-sm w-full placeholder:text-slate-400"
+        />
+      </div>
+      <button
+        type="submit"
+        disabled={loading}
+        className="bg-teal-600 hover:bg-teal-700 text-white font-medium rounded-lg py-2 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed mt-1"
+      >
         {loading ? "Logging in..." : "Login"}
       </button>
     </form>

@@ -12,9 +12,12 @@ export default function DashboardPage() {
   }
 
   return (
-    <main className="max-w-4xl mx-auto p-6 flex flex-col gap-6">
-      <h1 className="text-2xl font-bold">AI Content Generator</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <main className="max-w-5xl mx-auto px-4 py-8 flex flex-col gap-6">
+      <div>
+        <h1 className="text-2xl font-bold text-slate-900">Generate Content</h1>
+        <p className="text-sm text-slate-500 mt-1">Fill in the form and let AI write for you.</p>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
         <GeneratorForm onResult={handleResult} />
         <OutputCard output={output} />
       </div>
