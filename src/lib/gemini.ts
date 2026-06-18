@@ -1,7 +1,6 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import Groq from "groq-sdk";
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
-const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-lite" });
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 const templates: Record<string, string> = {
   blog: "Write a detailed blog post about the following topic",
@@ -20,12 +19,15 @@ export async function generateContent(
   const instruction = `${base}.${toneClause}\n\nTopic: ${prompt}`;
 
   try {
-    const result = await model.generateContent(instruction);
-    const text = result.response.text();
-    if (!text) throw new Error("Empty response from Gemini");
+    const completion = await groq.chat.completions.create({
+      model: "llama-3.3-70b-versatile",
+      messages: [{ role: "user", content: instruction }],
+    });
+    const text = completion.choices[0]?.message?.content;
+    if (!text) throw new Error("Empty response from Groq");
     return text;
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : "Unknown error";
-    throw new Error(`Gemini API error: ${message}`);
+    throw new Error(`Groq API error: ${message}`);
   }
 }
