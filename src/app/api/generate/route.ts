@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { generateContent } from "@/lib/gemini";
+import { generateContent } from "@/lib/groq";
 import { db } from "@/lib/db";
 
 export async function POST(req: NextRequest) {
@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
   try {
     output = await generateContent(templateType, prompt, tone);
   } catch (err: unknown) {
-    const message = err instanceof Error ? err.message : "Gemini API error";
+    const message = err instanceof Error ? err.message : "Groq API error";
     return NextResponse.json({ error: message }, { status: 500 });
   }
 
