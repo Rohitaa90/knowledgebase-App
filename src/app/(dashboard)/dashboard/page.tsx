@@ -1,11 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import GeneratorForm from "@/components/GeneratorForm";
 import OutputCard from "@/components/OutputCard";
 
 export default function DashboardPage() {
   const [output, setOutput] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetch("/api/history")
+      .then((r) => r.json())
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          setOutput(data[0].output);
+        }
+      });
+  }, []);
 
   function handleResult(_id: string, text: string) {
     setOutput(text);
