@@ -21,6 +21,10 @@ export default function DashboardPage() {
     setOutput(text);
   }
 
+  function handleReset() {
+    setOutput(null);
+  }
+
   return (
     <main className="max-w-5xl mx-auto px-4 py-8 flex flex-col gap-6">
       <div>
@@ -28,7 +32,7 @@ export default function DashboardPage() {
         <p className="text-sm text-slate-500 mt-1">Fill in the form and let AI write for you.</p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-        <GeneratorForm onResult={handleResult} />
+        <GeneratorForm onResult={handleResult} onReset={handleReset} />
         <OutputCard output={output} />
       </div>
     </main>

@@ -4,11 +4,19 @@ import { useState } from "react";
 
 interface Props {
   onResult: (id: string, output: string) => void;
+  onReset: () => void;
 }
 
-export default function GeneratorForm({ onResult }: Props) {
+export default function GeneratorForm({ onResult, onReset }: Props) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [formKey, setFormKey] = useState(0);
+
+  function handleReset() {
+    setFormKey((k) => k + 1);
+    setError("");
+    onReset();
+  }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -38,8 +46,11 @@ export default function GeneratorForm({ onResult }: Props) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white border border-slate-200 rounded-2xl p-6 flex flex-col gap-5 shadow-sm">
-      <h2 className="text-base font-semibold text-slate-800">Configure generation</h2>
+    <form key={formKey} onSubmit={handleSubmit} className="bg-white border border-slate-200 rounded-2xl p-6 flex flex-col gap-5 shadow-sm">
+      <div className="flex justify-between items-center">
+        <h2 className="text-base font-semibold text-slate-800">Configure generation</h2>
+        <button type="button" onClick={handleReset} className="text-xs text-teal-600 hover:text-teal-700 border border-teal-200 hover:border-teal-400 bg-teal-50 hover:bg-teal-100 rounded-lg px-3 py-1.5 font-medium transition-colors">↺ Reset</button>
+      </div>
 
       <div className="flex flex-col gap-1.5">
         <label className="text-sm font-medium text-slate-700">Content Type</label>
